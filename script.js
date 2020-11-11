@@ -15,16 +15,36 @@ function getHasil(computer, player) {
   if (player == "semut") return computer == "orang" ? "KALAH" : "MENANG!";
 }
 
+function putar(){
+  const imgComputer = document.querySelector('.img-komputer'); //ambil gambar
+  const gambar = ['gajah', 'semut', 'orang'];
+  let i = 0;
+  const waktuMulai = new Date().getTime();
+  setInterval(function(){
+    if( new Date().getTime() - waktuMulai > 1000){
+      clearInterval;
+      return;
+    }
+    imgComputer.setAttribute('src', 'img/' + gambar[i++] + '.png');
+    if( i == gambar.length ) i = 0;
+  }, 100);
+}
+
 const pilihanPlayer = document.querySelectorAll("li img");
 pilihanPlayer.forEach(function (e) {
   e.addEventListener("click", function () {
         const pilihanKomputer = getPilihanKomputer(); // ambil pilihan komputer
         const pilihanPlayer = e.className; // ambil pilihan player berdasarkan nama kelas
         const hasil = getHasil(pilihanKomputer, pilihanPlayer); // masukkan jawaban ke parameter function
-        const imageComputer =  document.querySelector('.img-komputer'); //ambil gambar komputer
-        imageComputer.setAttribute('src', 'img/'+ pilihanKomputer +'.png'); //ubah gambarnya berdasarkan pilihan
-        const info = document.querySelector('.info'); // ambil elemen info
-        info.innerHTML = hasil; //tulis di tengah div
+
+        putar();
+
+        setTimeout(function() {
+          const imageComputer =  document.querySelector('.img-komputer'); //ambil gambar komputer
+          imageComputer.setAttribute('src', 'img/'+ pilihanKomputer +'.png'); //ubah gambarnya berdasarkan pilihan
+          const info = document.querySelector('.info'); // ambil elemen info
+          info.innerHTML = hasil; //tulis di tengah div
+        }, 1000);
   });
 });
 
